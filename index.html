@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brähler 3D Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .viewer-container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+        
+        model-viewer {
+            width: 100%;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+        }
+        
+        .controls-info {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            color: white;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+            model-viewer {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="hero-section">
+        <div class="viewer-container">
+            <h1>BRÄHLER SYSTEMS</h1>
+            <p class="subtitle">
+                #1 in customized conference technology
+            </p>
+            
+            <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+            
+            <model-viewer 
+                src="neu.glb"
+                alt="Brähler Conference System"
+                camera-controls
+                auto-rotate
+                rotation-per-second="25deg"
+                shadow-intensity="2"
+                environment-image="neutral"
+                exposure="1.3"
+                camera-orbit="45deg 75deg 2.5m"
+                min-camera-orbit="auto auto 1m"
+                max-camera-orbit="auto auto 10m"
+                touch-action="pan-y"
+                ar
+                ar-modes="webxr scene-viewer quick-look">
+                
+                <div slot="progress-bar">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 20px;">3D Modell wird geladen...</p>
+                    </div>
+                </div>
+            </model-viewer>
