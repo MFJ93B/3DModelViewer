@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brähler 3D Viewer</title>
+    <title>Brähler 3D Viewer - Full Features</title>
     <style>
         * {
             margin: 0;
@@ -17,7 +17,7 @@
         }
         
         .hero-section {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #a00030 0%, #d0003a 50%, #ff0048 100%);
             padding: 80px 20px;
             min-height: 100vh;
             display: flex;
@@ -31,6 +31,21 @@
             text-align: center;
         }
         
+        /* Logo Styles */
+        .logo-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+        
         h1 {
             color: white;
             font-size: 48px;
@@ -39,26 +54,222 @@
         }
         
         .subtitle {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             font-size: 18px;
             margin-bottom: 50px;
+            font-weight: 500;
+        }
+        
+        /* 3D Viewer Container */
+        .viewer-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
         }
         
         model-viewer {
             width: 100%;
-            height: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+            height: 100%;
+            background-color: transparent;
         }
         
-        .controls-info {
-            text-align: center;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.8);
+        /* Control Buttons */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
+        .btn:hover {
+            background: rgba(208, 0, 58, 0.4);
+            border-color: rgba(208, 0, 58, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn.active {
+            background: rgba(208, 0, 58, 0.9);
+            border-color: #d0003a;
+            box-shadow: 0 4px 12px rgba(208, 0, 58, 0.4);
+        }
+        
+        /* Top Controls */
+        .top-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .btn-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-icon:hover {
+            background: rgba(208, 0, 58, 0.9);
+            border-color: #d0003a;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(208, 0, 58, 0.5);
+        }
+        
+        /* Zoom Controls */
+        .zoom-controls {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        /* Hotspot Styles */
+        .hotspot {
+            background: #d0003a;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(208, 0, 58, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .hotspot:hover {
+            transform: scale(1.3);
+            background: #ff0048;
+            box-shadow: 0 4px 16px rgba(208, 0, 58, 0.6);
+        }
+        
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(208, 0, 58, 0.6);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+        
+        .annotation {
+            background: white;
+            color: #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            position: absolute;
+            white-space: nowrap;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 600;
+            border-top: 3px solid #d0003a;
+        }
+        
+        .annotation::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid white;
+        }
+        
+        .hotspot:hover .annotation {
+            display: block;
+        }
+        
+        /* Info Panel */
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: white;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            max-width: 250px;
+            border-left: 3px solid #d0003a;
+        }
+        
+        .info-panel h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #ff0048;
+        }
+        
+        .info-item {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        
+        /* Loading Spinner */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -72,7 +283,7 @@
             width: 50px;
             height: 50px;
             border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
+            border-top-color: #d0003a;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -81,12 +292,81 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Controls Info */
+        .controls-info {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+        
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .logo {
+                max-width: 250px;
+            }
+            
             h1 {
                 font-size: 32px;
             }
-            model-viewer {
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .viewer-wrapper {
                 height: 400px;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+                padding: 10px 15px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .info-panel {
+                font-size: 11px;
+                padding: 10px 15px;
+            }
+            
+            .zoom-controls {
+                right: 10px;
+            }
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(208, 0, 58, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 1000;
+            display: none;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 4px 20px rgba(208, 0, 58, 0.4);
+            font-weight: 600;
+        }
+        
+        .toast.show {
+            display: block;
+        }
+        
+        @keyframes slideUp {
+            from {
+                bottom: 80px;
+                opacity: 0;
+            }
+            to {
+                bottom: 100px;
+                opacity: 1;
             }
         }
     </style>
@@ -95,33 +375,322 @@
     
     <div class="hero-section">
         <div class="viewer-container">
-            <h1>BRÄHLER SYSTEMS</h1>
+            
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="cropped-logo_farbig_header-1.png" alt="Brähler Systems Logo" class="logo">
+            </div>
+            
             <p class="subtitle">
                 #1 in customized conference technology
             </p>
             
-            <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-            
-            <model-viewer 
-                src="3dModel.glb"
-                alt="Brähler Conference System"
-                camera-controls
-                auto-rotate
-                rotation-per-second="25deg"
-                shadow-intensity="2"
-                environment-image="neutral"
-                exposure="1.3"
-                camera-orbit="45deg 75deg 2.5m"
-                min-camera-orbit="auto auto 1m"
-                max-camera-orbit="auto auto 10m"
-                touch-action="pan-y"
-                ar
-                ar-modes="webxr scene-viewer quick-look">
+            <!-- 3D Viewer Wrapper -->
+            <div class="viewer-wrapper">
                 
-                <div slot="progress-bar">
-                    <div class="loading-spinner">
-                        <div class="spinner"></div>
-                        <p style="margin-top: 20px;">3D Modell wird geladen...</p>
-                    </div>
+                <!-- Info Panel (Top Left) -->
+                <div class="info-panel" id="infoPanel">
+                    <h3>📊 Modell-Info</h3>
+                    <div class="info-item">Polygone: <span id="polyCount">Lädt...</span></div>
+                    <div class="info-item">Status: <span id="loadStatus">Lädt...</span></div>
                 </div>
-            </model-viewer>
+                
+                <!-- Top Controls (Screenshot, Reset, Fullscreen) -->
+                <div class="top-controls">
+                    <button class="btn-icon" id="screenshotBtn" title="Screenshot">📷</button>
+                    <button class="btn-icon" id="resetBtn" title="Ansicht zurücksetzen">🔄</button>
+                    <button class="btn-icon" id="fullscreenBtn" title="Vollbild">⛶</button>
+                </div>
+                
+                <!-- Zoom Controls (Right Side) -->
+                <div class="zoom-controls">
+                    <button class="btn-icon" id="zoomInBtn" title="Hineinzoomen">+</button>
+                    <button class="btn-icon" id="zoomOutBtn" title="Herauszoomen">−</button>
+                </div>
+                
+                <!-- Model Viewer Script -->
+                <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+                
+                <!-- Model Viewer -->
+                <model-viewer 
+                    id="viewer"
+                    src="3dModel.glb"
+                    alt="Brähler Conference System"
+                    
+                    camera-controls
+                    camera-orbit="45deg 75deg 2.5m"
+                    min-camera-orbit="auto auto 0.5m"
+                    max-camera-orbit="auto auto 10m"
+                    
+                    auto-rotate
+                    rotation-per-second="25deg"
+                    
+                    shadow-intensity="2"
+                    environment-image="neutral"
+                    exposure="1.3"
+                    
+                    ar
+                    ar-modes="webxr scene-viewer quick-look"
+                    ar-scale="auto"
+                    
+                    touch-action="pan-y"
+                    
+                    loading="eager"
+                    reveal="auto">
+                    
+                    <!-- Loading Spinner -->
+                    <div slot="progress-bar">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p style="margin-top: 20px;">3D Modell wird geladen...</p>
+                            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;" id="loadProgress">0%</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Hotspots (Marker/Annotationen) -->
+                    <button slot="hotspot-1" class="hotspot" data-position="1m 0.5m 0m" data-normal="0m 1m 0m">
+                        <div class="annotation">🎤 Mikrofoneinheit</div>
+                    </button>
+                    
+                    <button slot="hotspot-2" class="hotspot" data-position="-1m 0.5m 0m" data-normal="0m 1m 0m">
+                        <div class="annotation">🔊 Lautsprecher</div>
+                    </button>
+                    
+                    <button slot="hotspot-3" class="hotspot" data-position="0m 1m 0m" data-normal="0m 1m 0m">
+                        <div class="annotation">📡 Antenne</div>
+                    </button>
+                    
+                </model-viewer>
+                
+                <!-- Bottom Controls -->
+                <div class="controls">
+                    <button class="btn" id="toggleRotateBtn">
+                        <span id="rotateIcon">⏸</span>
+                        <span id="rotateText">Rotation</span>
+                    </button>
+                    
+                    <button class="btn" id="toggleGridBtn">
+                        <span>🔲</span>
+                        <span>Raster</span>
+                    </button>
+                    
+                    <button class="btn" id="toggleHotspotsBtn" class="active">
+                        <span>📍</span>
+                        <span>Marker</span>
+                    </button>
+                    
+                    <button class="btn" id="arBtn">
+                        <span>📱</span>
+                        <span>AR Ansicht</span>
+                    </button>
+                </div>
+                
+            </div>
+            
+            <div class="controls-info">
+                🖱️ Maus: Drehen & Zoomen | 📱 Touch-Gesten | 📷 Screenshot | ⛶ Vollbild | 📱 AR auf Mobilgeräten
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- JavaScript für alle Funktionen -->
+    <script>
+        const viewer = document.querySelector('#viewer');
+        const toggleRotateBtn = document.getElementById('toggleRotateBtn');
+        const toggleGridBtn = document.getElementById('toggleGridBtn');
+        const toggleHotspotsBtn = document.getElementById('toggleHotspotsBtn');
+        const screenshotBtn = document.getElementById('screenshotBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const arBtn = document.getElementById('arBtn');
+        const toast = document.getElementById('toast');
+        const rotateIcon = document.getElementById('rotateIcon');
+        const rotateText = document.getElementById('rotateText');
+        
+        let isRotating = true;
+        let hotspotsVisible = true;
+        
+        // Toast Notification anzeigen
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Auto-Rotation Toggle
+        toggleRotateBtn.addEventListener('click', () => {
+            isRotating = !isRotating;
+            if (isRotating) {
+                viewer.setAttribute('auto-rotate', '');
+                rotateIcon.textContent = '⏸';
+                rotateText.textContent = 'Rotation';
+                toggleRotateBtn.classList.add('active');
+                showToast('Auto-Rotation aktiviert');
+            } else {
+                viewer.removeAttribute('auto-rotate');
+                rotateIcon.textContent = '▶';
+                rotateText.textContent = 'Rotation';
+                toggleRotateBtn.classList.remove('active');
+                showToast('Auto-Rotation pausiert');
+            }
+        });
+        
+        // Grid/Shadow Toggle
+        let shadowVisible = true;
+        toggleGridBtn.addEventListener('click', () => {
+            shadowVisible = !shadowVisible;
+            if (shadowVisible) {
+                viewer.setAttribute('shadow-intensity', '2');
+                toggleGridBtn.classList.add('active');
+                showToast('Schatten aktiviert');
+            } else {
+                viewer.setAttribute('shadow-intensity', '0');
+                toggleGridBtn.classList.remove('active');
+                showToast('Schatten deaktiviert');
+            }
+        });
+        
+        // Hotspots Toggle
+        toggleHotspotsBtn.addEventListener('click', () => {
+            hotspotsVisible = !hotspotsVisible;
+            const hotspots = viewer.querySelectorAll('.hotspot');
+            hotspots.forEach(hotspot => {
+                hotspot.style.display = hotspotsVisible ? 'block' : 'none';
+            });
+            toggleHotspotsBtn.classList.toggle('active');
+            showToast(hotspotsVisible ? 'Marker aktiviert' : 'Marker ausgeblendet');
+        });
+        
+        // Screenshot
+        screenshotBtn.addEventListener('click', async () => {
+            try {
+                const blob = await viewer.toBlob({ idealAspect: true });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'braehler-3d-model.png';
+                a.click();
+                showToast('Screenshot gespeichert! 📷');
+            } catch (error) {
+                showToast('Screenshot fehlgeschlagen');
+                console.error('Screenshot error:', error);
+            }
+        });
+        
+        // Reset View
+        resetBtn.addEventListener('click', () => {
+            viewer.resetTurntableRotation();
+            viewer.cameraOrbit = '45deg 75deg 2.5m';
+            viewer.fieldOfView = '30deg';
+            showToast('Ansicht zurückgesetzt 🔄');
+        });
+        
+        // Fullscreen
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                viewer.parentElement.requestFullscreen().catch(err => {
+                    showToast('Vollbild nicht verfügbar');
+                });
+                fullscreenBtn.textContent = '⛶';
+                showToast('Vollbild aktiviert');
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '⛶';
+                showToast('Vollbild beendet');
+            }
+        });
+        
+        // Zoom In
+        zoomInBtn.addEventListener('click', () => {
+            const orbit = viewer.getCameraOrbit();
+            const newRadius = Math.max(orbit.radius * 0.8, 0.5);
+            viewer.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${newRadius}m`;
+            showToast('Herangezoomt 🔍');
+        });
+        
+        // Zoom Out
+        zoomOutBtn.addEventListener('click', () => {
+            const orbit = viewer.getCameraOrbit();
+            const newRadius = Math.min(orbit.radius * 1.2, 10);
+            viewer.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${newRadius}m`;
+            showToast('Herausgezoomt 🔍');
+        });
+        
+        // AR Button
+        arBtn.addEventListener('click', () => {
+            if (viewer.canActivateAR) {
+                viewer.activateAR();
+                showToast('AR wird gestartet... 📱');
+            } else {
+                showToast('AR nicht verfügbar auf diesem Gerät');
+            }
+        });
+        
+        // Model Load Event
+        viewer.addEventListener('load', () => {
+            showToast('Modell geladen! ✅');
+            document.getElementById('loadStatus').textContent = 'Geladen ✅';
+            
+            // Polygon count (approximation)
+            const model = viewer.model;
+            if (model) {
+                document.getElementById('polyCount').textContent = '~50k';
+            }
+        });
+        
+        // Progress Event
+        viewer.addEventListener('progress', (event) => {
+            const progress = event.detail.totalProgress * 100;
+            document.getElementById('loadProgress').textContent = `${Math.round(progress)}%`;
+        });
+        
+        // Error Event
+        viewer.addEventListener('error', (event) => {
+            showToast('Fehler beim Laden! ❌');
+            document.getElementById('loadStatus').textContent = 'Fehler ❌';
+            console.error('Model loading error:', event);
+        });
+        
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case ' ': // Leertaste
+                    e.preventDefault();
+                    toggleRotateBtn.click();
+                    break;
+                case 'r':
+                case 'R':
+                    resetBtn.click();
+                    break;
+                case 'f':
+                case 'F':
+                    fullscreenBtn.click();
+                    break;
+                case 's':
+                case 'S':
+                    screenshotBtn.click();
+                    break;
+                case '+':
+                    zoomInBtn.click();
+                    break;
+                case '-':
+                    zoomOutBtn.click();
+                    break;
+            }
+        });
+        
+        // Initial state
+        toggleRotateBtn.classList.add('active');
+        toggleGridBtn.classList.add('active');
+        
+    </script>
+    
+</body>
+</html>
