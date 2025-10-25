@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brähler 3D Viewer - Full Features</title>
+    <title>Brähler 3D Viewer</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
         
         .hero-section {
             background: transparent;
-            padding: 80px 20px;
+            padding: 40px 20px;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -40,23 +40,16 @@
         }
         
         .logo {
-            max-width: 200px;
-            width: 30%;
+            max-width: 133px;
+            width: 100%;
             height: auto;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-        }
-        
-        h1 {
-            color: #333;
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
         }
         
         .subtitle {
             color: #666;
             font-size: 18px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: 500;
         }
         
@@ -125,6 +118,10 @@
             box-shadow: 0 4px 12px rgba(208, 0, 58, 0.4);
         }
         
+        .btn-text {
+            display: inline;
+        }
+        
         /* Top Controls */
         .top-controls {
             position: absolute;
@@ -172,152 +169,12 @@
             z-index: 100;
         }
         
-        /* Hotspot Styles */
-        .hotspot {
-            background: #d0003a;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(208, 0, 58, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .hotspot:hover {
-            transform: scale(1.3);
-            background: #ff0048;
-            box-shadow: 0 4px 16px rgba(208, 0, 58, 0.6);
-        }
-        
-        .hotspot::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid rgba(208, 0, 58, 0.6);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.8);
-                opacity: 0;
-            }
-        }
-        
-        .annotation {
-            background: white;
-            color: #333;
-            padding: 12px 16px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            display: none;
-            position: absolute;
-            white-space: nowrap;
-            bottom: 35px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            font-weight: 600;
-            border-top: 3px solid #d0003a;
-        }
-        
-        .annotation::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid white;
-        }
-        
-        .hotspot:hover .annotation {
-            display: block;
-        }
-        
-        /* Info Panel */
-        .info-panel {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            border-radius: 12px;
-            color: #333;
-            font-size: 13px;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            max-width: 250px;
-            border-left: 3px solid #d0003a;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .info-panel h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #d0003a;
-        }
-        
-        .info-item {
-            margin: 5px 0;
-            opacity: 0.9;
-        }
-        
         /* Controls Info */
         .controls-info {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
             color: #666;
             font-size: 14px;
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .logo {
-                max-width: 250px;
-            }
-            
-            h1 {
-                font-size: 32px;
-            }
-            
-            .subtitle {
-                font-size: 16px;
-            }
-            
-            .viewer-wrapper {
-                height: 400px;
-            }
-            
-            .controls {
-                flex-wrap: wrap;
-                padding: 10px 15px;
-            }
-            
-            .btn {
-                padding: 8px 15px;
-                font-size: 12px;
-            }
-            
-            .info-panel {
-                font-size: 11px;
-                padding: 10px 15px;
-            }
-            
-            .zoom-controls {
-                right: 10px;
-            }
         }
         
         /* Toast Notification */
@@ -351,6 +208,122 @@
                 opacity: 1;
             }
         }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 20px 10px;
+            }
+            
+            .logo {
+                max-width: 100px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .viewer-wrapper {
+                height: 400px;
+                border-radius: 12px;
+            }
+            
+            /* Bottom Controls auf Mobile */
+            .controls {
+                bottom: 10px;
+                padding: 8px 12px;
+                gap: 6px;
+                border-radius: 30px;
+                flex-wrap: nowrap;
+                max-width: 95%;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                gap: 4px;
+                min-width: 0;
+                flex-shrink: 1;
+            }
+            
+            /* Text bei kleinen Screens ausblenden */
+            .btn-text {
+                display: none;
+            }
+            
+            /* Top Controls */
+            .top-controls {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            
+            .btn-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+            
+            /* Zoom Controls */
+            .zoom-controls {
+                right: 10px;
+                gap: 6px;
+            }
+            
+            .zoom-controls .btn-icon {
+                width: 38px;
+                height: 38px;
+            }
+            
+            .controls-info {
+                font-size: 11px;
+                margin-top: 15px;
+                padding: 0 10px;
+            }
+            
+            .toast {
+                font-size: 13px;
+                padding: 10px 20px;
+                max-width: 90%;
+            }
+        }
+        
+        /* Extra Small Screens */
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 80px;
+            }
+            
+            .subtitle {
+                font-size: 12px;
+            }
+            
+            .viewer-wrapper {
+                height: 300px;
+            }
+            
+            .controls {
+                padding: 6px 10px;
+                gap: 4px;
+            }
+            
+            .btn {
+                padding: 6px 10px;
+                font-size: 18px;
+            }
+            
+            .btn-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+            
+            .zoom-controls .btn-icon {
+                width: 34px;
+                height: 34px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -369,13 +342,6 @@
             
             <!-- 3D Viewer Wrapper -->
             <div class="viewer-wrapper">
-                
-                <!-- Info Panel (Top Left) -->
-                <div class="info-panel" id="infoPanel">
-                    <h3>📊 Modell-Info</h3>
-                    <div class="info-item">Polygone: <span id="polyCount">Lädt...</span></div>
-                    <div class="info-item">Status: <span id="loadStatus">Lädt...</span></div>
-                </div>
                 
                 <!-- Top Controls (Screenshot, Reset, Fullscreen) -->
                 <div class="top-controls">
@@ -419,49 +385,25 @@
                     
                     loading="eager"
                     reveal="auto">
-                    
-                    <!-- Hotspots (Marker/Annotationen) -->
-                    <button slot="hotspot-1" class="hotspot" data-position="1m 0.5m 0m" data-normal="0m 1m 0m">
-                        <div class="annotation">🎤 Mikrofoneinheit</div>
-                    </button>
-                    
-                    <button slot="hotspot-2" class="hotspot" data-position="-1m 0.5m 0m" data-normal="0m 1m 0m">
-                        <div class="annotation">🔊 Lautsprecher</div>
-                    </button>
-                    
-                    <button slot="hotspot-3" class="hotspot" data-position="0m 1m 0m" data-normal="0m 1m 0m">
-                        <div class="annotation">📡 Antenne</div>
-                    </button>
-                    
                 </model-viewer>
                 
                 <!-- Bottom Controls -->
                 <div class="controls">
                     <button class="btn" id="toggleRotateBtn">
                         <span id="rotateIcon">⏸</span>
-                        <span id="rotateText">Rotation</span>
-                    </button>
-                    
-                    <button class="btn" id="toggleGridBtn">
-                        <span>🔲</span>
-                        <span>Raster</span>
-                    </button>
-                    
-                    <button class="btn" id="toggleHotspotsBtn" class="active">
-                        <span>📍</span>
-                        <span>Marker</span>
+                        <span class="btn-text" id="rotateText">Rotation</span>
                     </button>
                     
                     <button class="btn" id="arBtn">
                         <span>📱</span>
-                        <span>AR Ansicht</span>
+                        <span class="btn-text">AR</span>
                     </button>
                 </div>
                 
             </div>
             
             <div class="controls-info">
-                🖱️ Maus: Drehen & Zoomen | 📱 Touch-Gesten | 📷 Screenshot | ⛶ Vollbild | 📱 AR auf Mobilgeräten
+                🖱️ Drehen & Zoomen | 📷 Screenshot | ⛶ Vollbild | 📱 AR auf Mobilgeräten
             </div>
         </div>
     </div>
@@ -473,8 +415,6 @@
     <script>
         const viewer = document.querySelector('#viewer');
         const toggleRotateBtn = document.getElementById('toggleRotateBtn');
-        const toggleGridBtn = document.getElementById('toggleGridBtn');
-        const toggleHotspotsBtn = document.getElementById('toggleHotspotsBtn');
         const screenshotBtn = document.getElementById('screenshotBtn');
         const resetBtn = document.getElementById('resetBtn');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
@@ -486,7 +426,6 @@
         const rotateText = document.getElementById('rotateText');
         
         let isRotating = true;
-        let hotspotsVisible = true;
         
         // Toast Notification anzeigen
         function showToast(message) {
@@ -513,32 +452,6 @@
                 toggleRotateBtn.classList.remove('active');
                 showToast('Auto-Rotation pausiert');
             }
-        });
-        
-        // Grid/Shadow Toggle
-        let shadowVisible = true;
-        toggleGridBtn.addEventListener('click', () => {
-            shadowVisible = !shadowVisible;
-            if (shadowVisible) {
-                viewer.setAttribute('shadow-intensity', '2');
-                toggleGridBtn.classList.add('active');
-                showToast('Schatten aktiviert');
-            } else {
-                viewer.setAttribute('shadow-intensity', '0');
-                toggleGridBtn.classList.remove('active');
-                showToast('Schatten deaktiviert');
-            }
-        });
-        
-        // Hotspots Toggle
-        toggleHotspotsBtn.addEventListener('click', () => {
-            hotspotsVisible = !hotspotsVisible;
-            const hotspots = viewer.querySelectorAll('.hotspot');
-            hotspots.forEach(hotspot => {
-                hotspot.style.display = hotspotsVisible ? 'block' : 'none';
-            });
-            toggleHotspotsBtn.classList.toggle('active');
-            showToast(hotspotsVisible ? 'Marker aktiviert' : 'Marker ausgeblendet');
         });
         
         // Screenshot
@@ -609,19 +522,11 @@
         // Model Load Event
         viewer.addEventListener('load', () => {
             showToast('Modell geladen! ✅');
-            document.getElementById('loadStatus').textContent = 'Geladen ✅';
-            
-            // Polygon count (approximation)
-            const model = viewer.model;
-            if (model) {
-                document.getElementById('polyCount').textContent = '~50k';
-            }
         });
         
         // Error Event
         viewer.addEventListener('error', (event) => {
             showToast('Fehler beim Laden! ❌');
-            document.getElementById('loadStatus').textContent = 'Fehler ❌';
             console.error('Model loading error:', event);
         });
         
@@ -655,7 +560,6 @@
         
         // Initial state
         toggleRotateBtn.classList.add('active');
-        toggleGridBtn.classList.add('active');
         
     </script>
     
