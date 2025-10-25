@@ -13,11 +13,11 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0f172a;
+            background: transparent;
         }
         
         .hero-section {
-            background: linear-gradient(135deg, #a00030 0%, #d0003a 50%, #ff0048 100%);
+            background: transparent;
             padding: 80px 20px;
             min-height: 100vh;
             display: flex;
@@ -40,21 +40,21 @@
         }
         
         .logo {
-            max-width: 400px;
-            width: 100%;
+            max-width: 200px;
+            width: 30%;
             height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
         }
         
         h1 {
-            color: white;
+            color: #333;
             font-size: 48px;
             margin-bottom: 20px;
             font-weight: 700;
         }
         
         .subtitle {
-            color: rgba(255, 255, 255, 0.95);
+            color: #666;
             font-size: 18px;
             margin-bottom: 50px;
             font-weight: 500;
@@ -65,9 +65,9 @@
             position: relative;
             width: 100%;
             height: 600px;
-            background: rgba(255, 255, 255, 0.08);
+            background: transparent;
             border-radius: 16px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
@@ -86,16 +86,17 @@
             display: flex;
             gap: 10px;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.95);
             padding: 15px 20px;
             border-radius: 50px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
         
         .btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
+            background: rgba(208, 0, 58, 0.1);
+            border: 2px solid rgba(208, 0, 58, 0.3);
+            color: #333;
             padding: 10px 20px;
             border-radius: 25px;
             cursor: pointer;
@@ -108,8 +109,8 @@
         }
         
         .btn:hover {
-            background: rgba(208, 0, 58, 0.4);
-            border-color: rgba(208, 0, 58, 0.8);
+            background: rgba(208, 0, 58, 0.15);
+            border-color: rgba(208, 0, 58, 0.6);
             transform: translateY(-2px);
         }
         
@@ -120,6 +121,7 @@
         .btn.active {
             background: rgba(208, 0, 58, 0.9);
             border-color: #d0003a;
+            color: white;
             box-shadow: 0 4px 12px rgba(208, 0, 58, 0.4);
         }
         
@@ -136,10 +138,10 @@
         .btn-icon {
             width: 45px;
             height: 45px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(208, 0, 58, 0.3);
             border-radius: 50%;
-            color: white;
+            color: #333;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -147,11 +149,13 @@
             font-size: 20px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .btn-icon:hover {
             background: rgba(208, 0, 58, 0.9);
             border-color: #d0003a;
+            color: white;
             transform: scale(1.1);
             box-shadow: 0 4px 12px rgba(208, 0, 58, 0.5);
         }
@@ -247,21 +251,22 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(255, 255, 255, 0.95);
             padding: 15px 20px;
             border-radius: 12px;
-            color: white;
+            color: #333;
             font-size: 13px;
             backdrop-filter: blur(10px);
             z-index: 100;
             max-width: 250px;
             border-left: 3px solid #d0003a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .info-panel h3 {
             font-size: 16px;
             margin-bottom: 8px;
-            color: #ff0048;
+            color: #d0003a;
         }
         
         .info-item {
@@ -269,34 +274,11 @@
             opacity: 0.9;
         }
         
-        /* Loading Spinner */
-        .loading-spinner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100%;
-            color: white;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #d0003a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
         /* Controls Info */
         .controls-info {
             text-align: center;
             margin-top: 30px;
-            color: rgba(255, 255, 255, 0.9);
+            color: #666;
             font-size: 14px;
         }
         
@@ -437,15 +419,6 @@
                     
                     loading="eager"
                     reveal="auto">
-                    
-                    <!-- Loading Spinner -->
-                    <div slot="progress-bar">
-                        <div class="loading-spinner">
-                            <div class="spinner"></div>
-                            <p style="margin-top: 20px;">3D Modell wird geladen...</p>
-                            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;" id="loadProgress">0%</p>
-                        </div>
-                    </div>
                     
                     <!-- Hotspots (Marker/Annotationen) -->
                     <button slot="hotspot-1" class="hotspot" data-position="1m 0.5m 0m" data-normal="0m 1m 0m">
@@ -645,12 +618,6 @@
             }
         });
         
-        // Progress Event
-        viewer.addEventListener('progress', (event) => {
-            const progress = event.detail.totalProgress * 100;
-            document.getElementById('loadProgress').textContent = `${Math.round(progress)}%`;
-        });
-        
         // Error Event
         viewer.addEventListener('error', (event) => {
             showToast('Fehler beim Laden! ❌');
@@ -694,3 +661,4 @@
     
 </body>
 </html>
+
